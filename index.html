@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>网易云音乐播放器</title>
+		<link href="css/new_file.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="MusicalBox"><!-- 主盒子 -->
+			<div class="top"><!-- 播放器上半部分容器 -->
+				<audio id="Mp3"><!-- 播放器 -->
+					<source src="music/0.mp3" type="audio/mp3" id="player"></source>
+					您的浏览器不支持audio元素
+				</audio>
+				<div class="tentacles"><!-- 机械臂 -->
+					<img src="img/3.png"/>
+				</div>
+				<div class="disk"><!-- 圆盘盒子 -->
+					<img src="img/0.jpg" class="bg"/>
+					<img src="img/2.png" width="100%" height="100%"/>
+				</div>
+			</div>
+			<div class="footer"><!-- 播放器下半部分容器 -->
+				<div class="ButtonBox"><!-- 按钮容器 -->
+					<div class="Lastsong"><img src="img/1.png" width="100%" height="100%"/> </div><!-- 上一首按钮 -->
+					<div class="suspend1" id="suspend"></div><!-- 暂停播放按钮 -->
+					<div class="Nextsong"><img src="img/1.png" width="100%" height="100%"/> </div><!-- 下一首按钮 -->
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/jquery-1.11.0.js" ></script>
+		<script src="./js/drive.js"></script>
+	</body>
+</html>
