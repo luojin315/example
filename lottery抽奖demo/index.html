@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>抽奖</title>
+		<link rel="stylesheet" type="text/css" href="./css/style.css" />
+	</head>
+	<body>
+		<div class="name-container">
+			<div class="luckyName">
+				<span id="name">请输入姓名</span>
+				<div class="luckyNameShow">
+					<span>恭喜：</span>
+					<p>
+					
+					</p>
+				</div>
+				
+			</div>
+			<p class="p-container">
+				<button type="button" class="button" id="beganToDraw">开始抽奖</button>
+				<button type="button" class="button" id="stopLoop">停止</button>
+			</p>
+		</div>
+		<p class="p-container">
+			<input type="text" name="name" class="nameInput" placeholder="请输入姓名" /><button class="button"
+				id="push">加入</button>
+		</p>
+		<script src="./js/jquery-1.11.1.min.js"></script>
+		<script>
+			const nameData = [1,2,3,4,5,6,7];
+			let luckyName = new Set(),
+				len = 5,
+				timer = null;
+
+			function pushName() {
+				const val = $(".nameInput").val();
+				let flag = false;
+				if (val === "") {
+					alert("请输入正确姓名");
+					return false;
+				}
+				nameData.map(item => {
+					if (item == val) {
+						flag = true;
+					}
+				})
+				if (flag) {
+					alert("姓名重复");
+					return false;
+				}
+				nameData.push(val);
+				$(".nameInput").val("")
+			}
+			$("#push").bind('click', pushName)
+
+			function beganToDraw() {
+				while(luckyName.size < len) {
+					let num = (Math.random() * nameData.length) | 0;
+					console.log(num)
+					luckyName.add(nameData[num]);
+				}
+			}
+			function loopName() {
+				if (timer) return false;
+				let num = 0;
+				$(".luckyNameShow").css("display","none");
+				timer = setInterval(() => {
+					if (num >= nameData.length) num = 0;
+					$("#name").text(nameData[num]);
+					num++;
+				}, 100)
+			}
+			$("#beganToDraw").bind('click', () => {
+				if(nameData.length < 5){
+					alert("人数不足5人")
+					return false;
+				}
+				beganToDraw();
+				loopName();
+			})
+			function stopLoop() {
+				clearInterval(timer)
+				let code = "";
+				[...luckyName].map(item => {
+					code += `<span>${item}</span>`
+				})
+				$(".luckyNameShow p").html(code);
+				$(".luckyNameShow").css("display","flex");
+				timer = null;
+				luckyName.clear();
+			}
+			$("#stopLoop").bind('click', stopLoop)
+		</script>
+	</body>
+</html>

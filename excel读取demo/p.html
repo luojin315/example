@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				/* cursor: pointer; */
+			}
+
+			div {
+				width: 100px;
+				height: 100px;
+				background-color: #4BDEFF;
+			}
+
+			span {
+				color: darkseagreen;
+			}
+
+			#frame {
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="file" id="excel-file">
+
+		<iframe src="./index.html" width="1200" height="600" id="frame"></iframe>
+		
+		
+		<script type="text/javascript" src="js/jq.js"></script>
+		<script type="text/javascript" src="js/xlsx.js"></script>
+		<script type="text/javascript" src="z/dist/xlsx.core.min.js"></script>
+		<script type="text/javascript">
+			function readWorkbookFromLocalFile(file, callback) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					var data = e.target.result;
+					var workbook = XLSX.read(data, {
+						type: 'binary'
+					});
+					if (callback) callback(workbook);
+				};
+				reader.readAsBinaryString(file);
+			}
+
+			function callbackFunction(data) {
+				for (let item in data.Sheets['小时工']) {
+					for (let type in data.Sheets['小时工'][item]) {
+						let val = data.Sheets['小时工'][item][type];
+						if (typeof val == 'string') {
+							if (val.indexOf('-') != -1) {
+								if(val.search(/- /i) != -1){
+									console.log(val);
+								}
+							}
+						}
+					}
+				}
+
+				var csv = XLSX.utils.sheet_to_html(data.Sheets['小时工']);
+				var dom = document.getElementById('frame');
+				var node = document.createElement('html');
+				node.innerHTML = csv;
+				let el = node.querySelectorAll('td'),
+				    len = node.querySelectorAll('td').length;
+				for(let i = 0; i < len; i++){
+					if(el[i].innerText.search(/ /i) != -1 || el[i].innerText.search(/，/i) != -1){
+						el[i].style.backgroundColor = 'red';
+					}
+					if(el[i].innerText.search(/[/]/) != -1){
+						el[i].innerText = dateConversion(el[i].innerText);
+					}
+				}
+				
+				dom.contentDocument.body = node.querySelector('body');
+			}
+
+			$('#excel-file').bind('change', function(e) {
+				readWorkbookFromLocalFile(this.files[0], callbackFunction);
+			});
+			
+			function dateConversion(val) {
+				let date = new Date(val),
+				y = date.getFullYear(),
+				m = date.getMonth()+1,
+				d = date.getDate();
+				return `${y}/${m}/${d}`;
+			}
+		</script>
+	</body>
+</html>

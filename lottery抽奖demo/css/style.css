@@ -1,0 +1,88 @@
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+}
+input,
+button {
+	outline: none;
+}
+.name-container{
+	height: 300px;
+	border: dashed 1px skyblue;
+	margin-bottom: 50px;
+	position: relative;
+	overflow: hidden;
+}
+.name-container .p-container{
+	position: absolute;
+	bottom: 50px;
+	width: 100%;
+}
+.luckyName{
+	width: 700px;
+	min-height: 200px;
+	margin: 0 auto;
+	margin-top: 30px;
+}
+.luckyName > span{
+	display: block;
+	text-align: center;
+	font-size: 20px;
+	margin: 50px 0px;
+}
+.nameInput {
+	height: 40px;
+	border-radius: 8px;
+	border: 1px solid #ccc;
+	padding-left: 10px;
+	padding-right: 10px;
+	transition: 0.5s all;
+	width: 200px;
+}
+
+.nameInput:focus {
+	border: #40a9ff 1px solid;
+	outline: 0;
+	box-shadow: 0 0 5px 0px #54b4c0;
+}
+.p-container{
+	display: flex;
+	justify-content: center;
+}
+.luckyNameShow{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	display: none;
+	animation: luckyNameShow .3s;
+}
+@keyframes luckyNameShow{
+	from{transform: translateY(10px);opacity: 0;}
+	to{transform: translateY(0px);opacity: 1;}
+}
+.luckyNameShow span{
+	margin: 0px 15px;
+	font-size: 14px;
+	color: red;
+}
+/* 鼠标按下动画 */
+button:active {
+	transform: scale(0.9);
+	transition: .3s;
+}
+
+.button {
+	color: black;
+	display: block;
+	padding: 10px 15px;
+	width: 100px;
+	position: relative;
+	background-color: transparent;
+	box-sizing: border-box;
+	overflow: hidden;
+	border: 1px solid #ccc;
+	margin: 0px 20px;
+	cursor: pointer;
+}
+
